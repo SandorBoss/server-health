@@ -1,15 +1,15 @@
-/*module.exports = class Start {
-    exIsOne() {
-        let x = 1;
-        return x;
-    }
-}*/
-
 module.exports = class Start {
-    constructor() {}
 
-    exIsOne() {
-        let x = 1;
-        return x;
-    }    
+    inputPort = '';
+    outputJson = {
+        port: 0
+    };
+
+    setPort(port) {
+        this.inputPort = port;
+    }
+
+    updateServerInfo() {
+        this.outputJson.port = +this.inputPort;
+    }
 }
