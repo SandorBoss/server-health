@@ -31,9 +31,34 @@ module.exports = class Storage {
     getInfoFileContent(portString) {
         const fileContent = fileSystem.readFileSync(
             `./server-infos/${portString}.txt`,
-            'utf-8'
+            'utf8'
         );
 
         return fileContent;
+    }
+
+    replaceLineBreaksWithSpaces(stringToProcess) {
+        return stringToProcess.replace(/(?:\n)/g, ' ');
+    }
+
+    writeRequestLog(portString) {
+        const infoContent = this.getInfoFileContent(portString);
+        const lineToWright = 
+            `\n${this.getActualTimestamp()} ` +
+            `${portString} ` +
+            `${this.replaceLineBreaksWithSpaces(infoContent)}` 
+        fileSystem.appendFileSync(
+            './request-log/request-log.txt',
+            lineToWright,
+            (error, result) => {
+                if (error) console.log(error);
+            }
+        );
+    }
+
+    getActualTimestamp() {
+        const time = new Date();
+        return `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ` +
+            `${time.getHours()}:${time.getMinutes()}`;
     }
 }
