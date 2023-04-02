@@ -1,4 +1,4 @@
-module.exports = class Start {
+module.exports = class Core {
     
     inputPort = '';
     outputJson = {
