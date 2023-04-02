@@ -2,8 +2,6 @@ const fileSystem = require('fs');
 
 module.exports = class Storage {
 
-    portFromCore = '';
-
     queryInFileSystem(queryString) {
         const portToQuery = this.transformQueryStringToPortNumber(
             queryString
