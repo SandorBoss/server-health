@@ -10,7 +10,14 @@ describe("start is working", () => {
         const resultObject = core.getDataWithQueryString(
             testConsts.testQueryString
         );
-        expect(resultObject).toEqual(testConsts.testResultObject);
+        expect(resultObject).toEqual(testConsts.testResultJson);
     });
+
+    it("should create json from storage answer", () => {
+        const answerJson = core.parseAnswerToJson(
+            testConsts.testResultObject
+        );
+        expect(answerJson).toEqual(testConsts.testResultJson);
+    })
 
 });

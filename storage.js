@@ -20,7 +20,7 @@ module.exports = class Storage {
     }
 
     createObjectFromQueryResult(portString, fileContent) {
-        let arrayFromFileContent = fileContent.split('\n');
+        const arrayFromFileContent = fileContent.split('\n');
         return {
             port: portString,
             cpuUsage: arrayFromFileContent[0],
@@ -29,7 +29,7 @@ module.exports = class Storage {
     }
     
     getFileContent(portString) {
-        let fileContent = fileSystem.readFileSync(
+        const fileContent = fileSystem.readFileSync(
             `./server-infos/${portString}.txt`,
             'utf-8'
         );
