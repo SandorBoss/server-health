@@ -1,21 +1,20 @@
 const Start = require('../start.js');
 const start = new Start();
 
-let testPort = '8080';
-let testJson = {
-    port: 8080
-}
+const Constants = require('./test-constants.js');
+const testConsts = new Constants();
 
 describe("start is working", () => {
 
     it("should set port number", () => {
-        start.setPort(testPort);
+        start.setPort(testConsts.testPort);
         expect(start.inputPort).toEqual('8080');
     });
 
     it("should set a json with port", () => {
-        start.updateServerInfo()
-        expect(start.outputJson).toEqual(testJson);
+        start.setPort(testConsts.testPort);
+        start.updateServerInfo();
+        expect(start.outputJson).toEqual(testConsts.testJson);
     });
 
 });

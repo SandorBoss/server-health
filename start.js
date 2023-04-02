@@ -1,5 +1,5 @@
 module.exports = class Start {
-
+    
     inputPort = '';
     outputJson = {
         port: 0
