@@ -13,7 +13,7 @@ describe("storage", () => {
     });
 
     it("should get file content", () => {
-        let fileContent = storage.getFileContent(testConsts.testPort);
+        let fileContent = storage.getInfoFileContent(testConsts.testPort);
         expect(fileContent).toEqual(testConsts.testFileContent);
     });
 

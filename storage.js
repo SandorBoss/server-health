@@ -6,7 +6,7 @@ module.exports = class Storage {
         const portToQuery = this.transformQueryStringToPortNumber(
             queryString
         );
-        const plainFileContent = this.getFileContent(portToQuery);
+        const plainFileContent = this.getInfoFileContent(portToQuery);
         const queryAnswer = this.createObjectFromQueryResult(
             portToQuery,
             plainFileContent
@@ -28,7 +28,7 @@ module.exports = class Storage {
         }
     }
     
-    getFileContent(portString) {
+    getInfoFileContent(portString) {
         const fileContent = fileSystem.readFileSync(
             `./server-infos/${portString}.txt`,
             'utf-8'
