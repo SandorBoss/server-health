@@ -2,28 +2,32 @@ const fileSystem = require('fs');
 
 module.exports = class Storage {
 
-    portFromCore = {
-        port : 8080
-    };
+    portFromCore = '';
 
-    portToQuery = this.portFromCore.port.toString();
-
-    queryInFileSystem() {
-        let portToQuery = this.parsePortToString();
+    queryInFileSystem(queryString) {
+        const portToQuery = this.transformQueryStringToPortNumber(
+            queryString
+        );
+        const plainFileContent = this.getFileContent(portToQuery);
+        const queryAnswer = this.createObjectFromQueryResult(
+            portToQuery,
+            plainFileContent
+        );
+        /*let portToQuery = this.parsePortToString();
         let plainFileContent = this.getFileContent(portToQuery);
         let queryAnswer = this.parseAnswerToJson(
             portToQuery,
             plainFileContent
-        );
+        );*/
 
         return queryAnswer;
     }
     
-    parsePortToString() {
-        return this.portFromCore.port.toString();
+    transformQueryStringToPortNumber(queryString) {
+        return queryString.replace('port=', '');
     }
 
-    parseAnswerToJson(portString, fileContent) {
+    createObjectFromQueryResult(portString, fileContent) {
         let arrayFromFileContent = fileContent.split('\n');
         return {
             port: portString,

@@ -6,6 +6,10 @@ const testConsts = new Constants();
 
 describe("start is working", () => {
 
+    it("should send query string to storage", () => {
+
+    });
+    
     it("should set port number", () => {
         core.setPort(testConsts.testPort);
         expect(core.inputPort).toEqual('8080');

@@ -1,1 +1,3 @@
 ./node_modules
+./nem-endpoint.js
+./nem-server.js
