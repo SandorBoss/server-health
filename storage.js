@@ -13,12 +13,6 @@ module.exports = class Storage {
             portToQuery,
             plainFileContent
         );
-        /*let portToQuery = this.parsePortToString();
-        let plainFileContent = this.getFileContent(portToQuery);
-        let queryAnswer = this.parseAnswerToJson(
-            portToQuery,
-            plainFileContent
-        );*/
 
         return queryAnswer;
     }
