@@ -19,6 +19,10 @@ module.exports = class Storage {
         return queryString.replace('port=', '');
     }
 
+    transformLogDataToArray(logData) {
+        return logData.split('\n');
+    }
+
     createObjectFromQueryResult(portString, fileContent) {
         const arrayFromFileContent = fileContent.split('\n');
         return {
@@ -38,26 +42,36 @@ module.exports = class Storage {
     }
 
     getLogContent(filePath) {
-        return fileSystem.readFileSync(filePath, 'utf8');
+        const plainLogContent = fileSystem.readFileSync(
+            filePath,
+            'utf8'
+        );
+        return this.transformLogDataToArray(plainLogContent); 
     }
 
     replaceLineBreaksWithSpaces(stringToProcess) {
         return stringToProcess.replace(/(?:\n)/g, ' ');
     }
 
-    writeRequestLog(portString, filePath) {
-        const infoContent = this.getInfoFileContent(portString);
-        const lineToWright = 
-            `${this.getActualTimestamp()} ` +
-            `${portString} ` +
-            `${this.replaceLineBreaksWithSpaces(infoContent)}\n` 
-        fileSystem.appendFileSync(
-            filePath,
-            lineToWright,
-            (error, result) => {
-                if (error) console.log(error);
-            }
-        );
+    writeRequestLog(queryString, filePath) {
+        if (queryString) {
+            const portString = this.transformQueryStringToPortNumber(
+                queryString
+            );
+            const infoContent = this.getInfoFileContent(portString);
+            const lineToWright = 
+                `${this.getActualTimestamp()} ` +
+                `${portString} ` +
+                `${this.replaceLineBreaksWithSpaces(infoContent)}\n` 
+            fileSystem.appendFileSync(
+                filePath,
+                lineToWright,
+                (error, result) => {
+                    if (error) console.log(error);
+                }
+            );
+        }
+        
     }
 
     getActualTimestamp() {

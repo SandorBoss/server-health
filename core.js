@@ -8,6 +8,15 @@ module.exports = class Core {
         return this.parseAnswerToJson(resultObject);
     }
 
+    writeLogEntry(queryString, filePath) {
+        storage.writeRequestLog(queryString, filePath);
+    }
+
+    getLogData(filePath) {
+        const logContent = storage.getLogContent(filePath);
+        return JSON.stringify(logContent);
+    }
+
     parseAnswerToJson(answer) {
         return JSON.stringify(answer);
     }

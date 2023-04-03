@@ -50,24 +50,37 @@ describe("storage", () => {
             inputString
         );
         expect(actualOutputString).toEqual(expectedString);
-    })
+    });
+
+    it("should create an array from plain text", () => {
+        const inputPlainText = 'a\nb\nc';
+        const expectedArray = ['a', 'b', 'c'];
+        const actualOutputArray = storage.transformLogDataToArray(
+            inputPlainText
+        );
+        expect(actualOutputArray).toEqual(expectedArray);
+    });
 
     it("should save last query in log file", () => {
         const infoContent = storage.getInfoFileContent(testConsts.testPort)
             .replace('\n', ' ');
         const timestamp = storage.getActualTimestamp();
-        storage.writeRequestLog(testConsts.testPort, testConsts.testLogPath);
+        storage.writeRequestLog(testConsts.queryString, testConsts.testLogPath);
         const logContent = fileSystem.readFileSync(testConsts.testLogPath, 'utf8');
         const stringToSearch =
             `${timestamp} ${testConsts.testPort} ${infoContent}`;
         expect(logContent).toContain(stringToSearch);
     });
 
-    it("should return log as plain text", () => {
+    it("should return log as array", () => {
+        const someArray = [];
         storage.writeRequestLog(testConsts.testPort, testConsts.testLogPath);
         const logContent = storage.getLogContent(testConsts.testLogPath);
-        expect(logContent).toContain('\n');
-        expect(logContent).toContain('2023');
+        expect(logContent[logContent.length-2]).toEqual(
+            `${storage.getActualTimestamp()} ${testConsts.testPort} ` + 
+            `${testConsts.testResultObject.cpuUsage} ` +
+            `${testConsts.testResultObject.freeMemory}`
+        );
     });
 
 });
