@@ -37,18 +37,22 @@ module.exports = class Storage {
         return fileContent;
     }
 
+    getLogContent(filePath) {
+        return fileSystem.readFileSync(filePath, 'utf8');
+    }
+
     replaceLineBreaksWithSpaces(stringToProcess) {
         return stringToProcess.replace(/(?:\n)/g, ' ');
     }
 
-    writeRequestLog(portString) {
+    writeRequestLog(portString, filePath) {
         const infoContent = this.getInfoFileContent(portString);
         const lineToWright = 
-            `\n${this.getActualTimestamp()} ` +
+            `${this.getActualTimestamp()} ` +
             `${portString} ` +
-            `${this.replaceLineBreaksWithSpaces(infoContent)}` 
+            `${this.replaceLineBreaksWithSpaces(infoContent)}\n` 
         fileSystem.appendFileSync(
-            './request-log/request-log.txt',
+            filePath,
             lineToWright,
             (error, result) => {
                 if (error) console.log(error);

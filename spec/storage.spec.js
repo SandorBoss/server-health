@@ -56,12 +56,18 @@ describe("storage", () => {
         const infoContent = storage.getInfoFileContent(testConsts.testPort)
             .replace('\n', ' ');
         const timestamp = storage.getActualTimestamp();
-        const fileName = './request-log/request-log.txt';
-        storage.writeRequestLog(testConsts.testPort);
-        const logContent = fileSystem.readFileSync(fileName, 'utf8');
+        storage.writeRequestLog(testConsts.testPort, testConsts.testLogPath);
+        const logContent = fileSystem.readFileSync(testConsts.testLogPath, 'utf8');
         const stringToSearch =
             `${timestamp} ${testConsts.testPort} ${infoContent}`;
         expect(logContent).toContain(stringToSearch);
+    });
+
+    it("should return log as plain text", () => {
+        storage.writeRequestLog(testConsts.testPort, testConsts.testLogPath);
+        const logContent = storage.getLogContent(testConsts.testLogPath);
+        expect(logContent).toContain('\n');
+        expect(logContent).toContain('2023');
     });
 
 });

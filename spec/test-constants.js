@@ -18,4 +18,6 @@ module.exports = class TestConstants {
 
     testQueryString = 'port=8080';
 
+    testLogPath = './request-log/test-log.txt';
+
 }
